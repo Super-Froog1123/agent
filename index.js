@@ -1,3 +1,17 @@
-import { runAgent } from "./agent.js";
+import { vertexLLM } from "./llm.js";
+import "dotenv/config";
 
-runAgent("帮我算 2 + 3").then(console.log);
+
+async function main() {
+    const userInput = "给我一个关于香港树木风险的新闻研究简报";
+
+    try {
+        const result = await vertexLLM(userInput);
+        console.log("Agent output:");
+        console.dir(result, { depth: null });
+    } catch (error) {
+        console.error("Error running agent:", error);
+    }
+}
+
+main();

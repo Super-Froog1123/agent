@@ -1,4 +1,4 @@
-import { fakeLLM } from "./llm.js";
+import { vertexLLM } from "./llm.js";
 import { tools } from "./tools.js";
 
 // agent.js是“控制中枢/编排器（orchestrator）”，它不负责聪明，只负责把事情按顺序做对。
