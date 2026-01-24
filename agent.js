@@ -1,21 +1,19 @@
-import { vertexLLM } from "./llm.js";
-import { tools } from "./tools.js";
+// agent.js
+import { designAgent } from "./agents/designAgent.js";
+import { writingAgent } from "./agents/writingAgent.js";
 
-// agent.js是“控制中枢/编排器（orchestrator）”，它不负责聪明，只负责把事情按顺序做对。
-
-// js中的export相当于java中的public
-// js默认就是文件私有，除非export
-// js模块的默认规则是：没export是“文件私有”（只能本文件使用）
-// export了 = 公共API
-
+// Orchestrator
+// 不负责智能，只负责流程
 export async function runAgent(userInput) {
-  const decision = await fakeLLM(userInput);
+  // 设计阶段：页面结构
+  const designResult = await designAgent(userInput);
 
-  if (decision.action) {
-    const { tool, input } = decision.action;
-    const result = tools[tool](input);
-    return `结果是 ${result}`;
-  }
+  // 写作阶段：基于结构写内容
+  const writingResult = await writingAgent(userInput, designResult);
 
-  return decision.final;
+  return {
+    design: designResult,
+    writing: writingResult,
+  };
+  
 }
