@@ -5,15 +5,14 @@ import { writingAgent } from "./agents/writingAgent.js";
 // Orchestrator
 // 不负责智能，只负责流程
 export async function runAgent(userInput) {
-  // 设计阶段：页面结构
-  const designResult = await designAgent(userInput);
+  // Step 1：写作阶段 —— 生成完整文章
+  const article = await designAgent(userInput);
 
-  // 写作阶段：基于结构写内容
-  const writingResult = await writingAgent(userInput, designResult);
+  // Step 2：设计阶段 —— 根据文章生成网页结构
+  const pageStructure = await writingAgent(article);
 
   return {
-    design: designResult,
-    writing: writingResult,
+    article,
+    pageStructure,
   };
-  
 }

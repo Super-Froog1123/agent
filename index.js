@@ -1,8 +1,6 @@
 import "dotenv/config";
 import { runAgent } from "./agent.js";
 
-console.log("CREDENTIALS =", process.env.GOOGLE_APPLICATION_CREDENTIALS);
-
 async function main() {
     const userInput = "给我一个关于香港树木风险的新闻研究简报";
 
