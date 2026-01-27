@@ -56,4 +56,20 @@ tools.js
 
 已上传github
 
-### 2026.1.25_1 实现端到端的结果
+### 2026.1.27 express + AJAX 平台搭建
+
+AI 填充一个“EJS 模板骨架语言”
+
+用户输入 / 新闻 brief
+↓
+Agent（受限 Prompt）
+↓
+生成 EJS（字符串）
+↓
+静态检查（正则 / AST / 黑名单）
+↓
+写入临时 views/generated.ejs
+↓
+Express render
+↓
+浏览器展示
