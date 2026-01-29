@@ -1,18 +1,45 @@
 // agent.js
-import { designAgent } from "./agents/designAgent.js";
-import { writingAgent } from "./agents/writingAgent.js";
+// 主流程控制文件，协调各个agent的调用
+// 输入：input（用户请求数据）
+// 输出：runAgentPipeline函数返回最终结果在data字段中
 
-// Orchestrator
-// 不负责智能，只负责流程
-export async function runAgent(userInput) {
-  // Step 1：写作阶段 —— 生成完整文章
-  const article = await designAgent(userInput);
+import { editor } from "./agents/editor.js";
+import { reporter } from "./agents/reporter.js";
+import { webEditor } from "./agents/webEditor.js";
 
-  // Step 2：设计阶段 —— 根据文章生成网页结构
-  const pageStructure = await writingAgent(article);
+export async function runAgentPipeline(input) {
+  try {
+    // Editor: 生成写作任务（brief）
+    const brief = await editor(input);
+    if (!brief) {
+      throw new Error("Editor returned empty brief");
+    }
 
-  return {
-    article,
-    pageStructure,
-  };
+    // Reporter：生成新闻内容
+    const story = await reporter(brief);
+    if (!story) {
+      throw new Error("Reporter returned empty story");
+    }
+
+    // WebEditor：适配为前端可用的结构
+    const viewData = await webEditor(story);
+
+    if (!viewData) {
+      throw new Error("WebEditor returned empty viewData");
+    }
+
+    // 返回最终结果
+    return {
+      status: "success",
+      data: viewData
+    };
+
+  } catch (error) {
+    console.error("[AgentPipeline Error]", error);
+
+    return {
+      status: "error",
+      message: error.message
+    };
+  }
 }

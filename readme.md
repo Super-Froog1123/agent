@@ -73,3 +73,52 @@ Agent（受限 Prompt）
 Express render
 ↓
 浏览器展示
+
+### 2026.1.27 网页设计模版的搭建
+
+基本stroyTelling页面设计
+    views文件夹中
+    使用JS注入，没有使用EJS
+
+底层llm的输入输出
+    输入：配置基本模型信息
+    返回callLLM函数，函数返回值是string
+
+重写agents的逻辑
+    调用Editor
+    将Editor的输出交给reporter
+    将reporter的输出交给webEditor
+    把最终结果返回给index.js
+
+agents控制的顺序
+    editor的输入输出
+        决定写什么、怎么写、写到什么标准
+    reporter的输入输出
+        只负责把“把内容写出来”
+    webEditor的输入输出
+        把内容变成“网页可用的形态”
+
+index.js
+    环境和密码的注入
+    主渲染流程
+
+流程：
+用户在网页输入
+  ↓
+点击「生成」
+  ↓
+fetch /api/story?topic=xxx
+  ↓
+index.js
+  ↓
+runAgentPipeline({ topic })
+  ↓
+Editor（LLM：规范化）
+  ↓
+Reporter（LLM：生成）
+  ↓
+WebEditor（扁平化）
+  ↓
+JSON 返回
+  ↓
+前端 JS 注入 DOM

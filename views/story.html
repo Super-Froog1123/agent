@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+  <meta charset="UTF-8" />
+  <title>Story</title>
+  <link rel="stylesheet" href="/assets/story.css" />
+
+</head>
+<body>
+
+<!-- 放在 <body> 最上面 -->
+<section style="padding: 20px; border-bottom: 1px solid #eee;">
+  <textarea
+    id="userInput"
+    rows="3"
+    style="width: 80%;"
+    placeholder="请输入新闻主题，例如：AI 对媒体行业的影响"
+  ></textarea>
+  <br /><br />
+  <button id="generateBtn">生成</button>
+</section>
+
+
+<main id="story">
+  <section class="panel hero">
+    <h1 id="headline"></h1>
+    <p id="lede"></p>
+  </section>
+
+  <section class="panel scene">
+    <p id="scene"></p>
+  </section>
+
+  <section class="panel event">
+    <p id="key_event"></p>
+  </section>
+
+  <section class="panel background">
+    <p id="background"></p>
+  </section>
+
+  <section class="panel voices">
+    <div id="voices"></div>
+  </section>
+
+  <section class="panel impact">
+    <p id="impact"></p>
+  </section>
+
+  <section class="panel ending">
+    <p id="ending"></p>
+  </section>
+</main>
+
+<script src="/assets/story.js"></script>
+</body>
+</html>
